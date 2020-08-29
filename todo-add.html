@@ -1,0 +1,111 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<!-- <link rel="import" href="../paper-checkbox/paper-checkbox.html"> -->
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<!-- <link rel="import" href="../paper-listbox/paper-listbox.html"> -->
+<!-- <link rel="import" href="../paper-item/paper-item.html"> -->
+<link rel="import" href="../paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
+
+<dom-module id="todo-add">
+    <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      paper-card {
+          --paper-card: {
+            display: flex;
+            /* justify-content: space-between; */
+          }
+      }
+      paper-input {
+          --paper-input: {
+            justify-content: start;
+          }
+      }
+      .input {
+        width: 90%;
+        background: rgba(255, 255, 255, 0.1);
+        opacity: 0.5;
+      }
+      paper-icon-button {
+          --paper-icon-botton: {
+            justify-content: end;
+            align-item: center;
+            width: 100px;
+          }
+      }
+      .button {
+        background-image: url(./images/add.svg);
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+      }
+      
+
+
+    </style>
+
+<!-- ingresar tareas nuevas -->
+    <div>
+        <paper-card>
+            <paper-input class="input" label="Agrega una nueva tarea" value="{{ latestTaskName }}"></paper-input>
+                <div class="button">
+                    <paper-icon-button on-click="addTask"></paper-icon-button>
+                </div>
+        </paper-card>
+    </div>
+
+
+
+    </template>
+
+    <script>
+        /**
+         * `todo-add`
+         * componente para agregar tareas
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class TodoAdd extends Polymer.Element {
+            static get is() {
+                return 'todo-add';
+            }
+            static get properties() {
+                return {
+                    tasks: {
+                        type: Array,
+                        value: []
+                    },
+                    latestTaskName: {
+                        type: String,
+                        value: ''
+                    }
+                }
+            }
+            addTask() {
+                if (this.latestTaskName === '') {
+                    alert('Debes ingresar una tarea');
+                } else {
+                    // nueva tarea no completada
+                    localStorage.setItem(this.latestTaskName, 'no');
+                    // Resetea latestTaskName
+                    console.log(this.latestTaskName);
+                    this.latestTaskName = "";
+                    // actualiza lista de tareas
+                    // this.updateTasks();
+                }
+
+            }
+
+        }
+
+        window.customElements.define(TodoAdd.is, TodoAdd);
+    </script>
+</dom-module>

@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="todo-add">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `todo-add`
+     * componente para agregar tareas
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class TodoAdd extends Polymer.Element {
+      static get is() { return 'todo-add'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'todo-add'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(TodoAdd.is, TodoAdd);
+  </script>
+</dom-module>
