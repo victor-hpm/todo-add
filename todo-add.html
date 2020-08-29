@@ -1,11 +1,8 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
-<!-- <link rel="import" href="../paper-checkbox/paper-checkbox.html"> -->
 <link rel="import" href="../paper-button/paper-button.html">
 <link rel="import" href="../paper-card/paper-card.html">
 <link rel="import" href="../paper-input/paper-input.html">
-<!-- <link rel="import" href="../paper-listbox/paper-listbox.html"> -->
-<!-- <link rel="import" href="../paper-item/paper-item.html"> -->
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
 
@@ -31,6 +28,7 @@
         width: 90%;
         background: rgba(255, 255, 255, 0.1);
         opacity: 0.5;
+        border: 0;
       }
       paper-icon-button {
           --paper-icon-botton: {
@@ -53,7 +51,7 @@
 <!-- ingresar tareas nuevas -->
     <div>
         <paper-card>
-            <paper-input class="input" label="Agrega una nueva tarea" value="{{ latestTaskName }}"></paper-input>
+            <paper-input class="input" label="Agrega una nueva tarea" value="{{ tasksValue }}"></paper-input>
                 <div class="button">
                     <paper-icon-button on-click="addTask"></paper-icon-button>
                 </div>
@@ -78,33 +76,35 @@
                 return 'todo-add';
             }
             static get properties() {
-                return {
-                    tasks: {
-                        type: Array,
-                        value: []
-                    },
-                    latestTaskName: {
-                        type: String,
-                        value: ''
+                    return {
+                        tasks: {
+                            type: Array,
+                            value: [],
+                            notify: true
+                        },
+                        tasksValue: {
+                            type: String,
+                            value: '',
+                        }
                     }
                 }
-            }
+                // método para guardar las tareas en el array
             addTask() {
-                if (this.latestTaskName === '') {
-                    alert('Debes ingresar una tarea');
+                // si value no está vacio
+                if (this.tasksValue !== '') {
+                    this.tasks.push({
+                        tarea: this.tasksValue
+                    });
+                    this.tasksValue = "";
+                    console.log('taskValue', this.tasksValue);
+                    console.log('tareaAray', this.tasks);
                 } else {
-                    // nueva tarea no completada
-                    localStorage.setItem(this.latestTaskName, 'no');
-                    // Resetea latestTaskName
-                    console.log(this.latestTaskName);
-                    this.latestTaskName = "";
-                    // actualiza lista de tareas
-                    // this.updateTasks();
+                    alert('Debes agregar una tarea');
                 }
-
             }
 
         }
+
 
         window.customElements.define(TodoAdd.is, TodoAdd);
     </script>
